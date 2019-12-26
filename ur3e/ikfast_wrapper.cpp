@@ -145,13 +145,9 @@ namespace robots {
 
         if( ee_pose.size() == 7 )  // ik, given translation vector and quaternion pose
         {
-#if IK_VERSION > 54
             // for IKFast 56,61
             IkSolutionList<IKREAL_TYPE> solutions;
-#else
-            // for IKFast 54
-            std::vector<IKSolution> vsolutions;
-#endif
+
             std::vector<IKREAL_TYPE> vfree(num_free_parameters);
 
             eetrans[0] = ee_pose[0];
@@ -173,62 +169,32 @@ namespace robots {
             eerot[3] = 2.0f*qx*qy + 2.0f*qz*qw;         eerot[4] = 1.0f - 2.0f*qx*qx - 2.0f*qz*qz;  eerot[5] = 2.0f*qy*qz - 2.0f*qx*qw;
             eerot[6] = 2.0f*qx*qz - 2.0f*qy*qw;         eerot[7] = 2.0f*qy*qz + 2.0f*qx*qw;         eerot[8] = 1.0f - 2.0f*qx*qx - 2.0f*qy*qy;
 
-            // For debugging, output the matrix
-            /*
-            for (unsigned char i=0; i<=8; i++)
-            {   // detect -0.0 and replace with 0.0
-                if ( ((int&)(eerot[i]) & 0xFFFFFFFF) == 0) eerot[i] = 0.0;
-            }
-            printf("     Rotation     %f   %f   %f  \n", eerot[0], eerot[1], eerot[2] );
-            printf("                  %f   %f   %f  \n", eerot[3], eerot[4], eerot[5] );
-            printf("                  %f   %f   %f  \n", eerot[6], eerot[7], eerot[8] );
-            printf("\n");
-            */
 
-            // for(std::size_t i = 0; i < vfree.size(); ++i)
-            //     vfree[i] = atof(argv[13+i]);
-
-#if IK_VERSION > 54
             // for IKFast 56,61
             bool bSuccess = ComputeIk(eetrans, eerot, vfree.size() > 0 ? &vfree[0] : NULL, solutions);
-#else
-            // for IKFast 54
-            bool bSuccess = ik(eetrans, eerot, vfree.size() > 0 ? &vfree[0] : NULL, vsolutions);
-#endif
+
             if( !bSuccess ) {
                 fprintf(stderr,"Error: (inverse kinematics) failed to get ik solution\n");
                 return joint_configs;
             }
 
-#if IK_VERSION > 54
             // for IKFast 56,61
             unsigned int num_of_solutions = (int)solutions.GetNumSolutions();
-#else
-            // for IKFast 54
-            unsigned int num_of_solutions = (int)vsolutions.size();
-#endif
+
             // printf("Found %d ik solutions:\n", num_of_solutions ); 
 
             std::vector<IKREAL_TYPE> solvalues(num_of_joints);
             for(std::size_t i = 0; i < num_of_solutions; ++i) {
-#if IK_VERSION > 54
                 // for IKFast 56,61
                 const IkSolutionBase<IKREAL_TYPE>& sol = solutions.GetSolution(i);
                 int this_sol_free_params = (int)sol.GetFree().size(); 
-#else
-                // for IKFast 54
-                int this_sol_free_params = (int)vsolutions[i].GetFree().size();
-#endif
+
                 // printf("sol%d (free=%d): ", (int)i, this_sol_free_params );
                 std::vector<IKREAL_TYPE> vsolfree(this_sol_free_params);
 
-#if IK_VERSION > 54
                 // for IKFast 56,61
                 sol.GetSolution(&solvalues[0],vsolfree.size()>0?&vsolfree[0]:NULL);
-#else
-                // for IKFast 54
-                vsolutions[i].GetSolution(&solvalues[0],vsolfree.size()>0?&vsolfree[0]:NULL);
-#endif
+
 
                 for( std::size_t j = 0; j < solvalues.size(); ++j)
                     joint_configs.push_back(solvalues[j]);
@@ -239,13 +205,8 @@ namespace robots {
         } 
         else if( ee_pose.size() == 12 )  // ik, given rotation-translation matrix
         {
-#if IK_VERSION > 54
             // for IKFast 56,61
             IkSolutionList<IKREAL_TYPE> solutions;
-#else
-            // for IKFast 54
-            std::vector<IKSolution> vsolutions;
-#endif
             std::vector<IKREAL_TYPE> vfree(num_free_parameters);
 
             eerot[0] = ee_pose[0]; eerot[1] = ee_pose[1]; eerot[2] = ee_pose[2];  eetrans[0] = ee_pose[3];
@@ -254,47 +215,27 @@ namespace robots {
             // for(std::size_t i = 0; i < vfree.size(); ++i)
             //     vfree[i] = atof(argv[13+i]);
 
-#if IK_VERSION > 54
             // for IKFast 56,61
             bool bSuccess = ComputeIk(eetrans, eerot, vfree.size() > 0 ? &vfree[0] : NULL, solutions);
-#else
-            // for IKFast 54
-            bool bSuccess = ik(eetrans, eerot, vfree.size() > 0 ? &vfree[0] : NULL, vsolutions);
-#endif
             if( !bSuccess ) {
                 fprintf(stderr,"Error: (inverse kinematics) failed to get ik solution\n");
                 return joint_configs;
             }
 
-#if IK_VERSION > 54
             // for IKFast 56,61
             unsigned int num_of_solutions = (int)solutions.GetNumSolutions();
-#else
-            // for IKFast 54
-            unsigned int num_of_solutions = (int)vsolutions.size();
-#endif
             // printf("Found %d ik solutions:\n", num_of_solutions ); 
 
             std::vector<IKREAL_TYPE> solvalues(num_of_joints);
             for(std::size_t i = 0; i < num_of_solutions; ++i) {
-#if IK_VERSION > 54
                 // for IKFast 56,61
                 const IkSolutionBase<IKREAL_TYPE>& sol = solutions.GetSolution(i);
                 int this_sol_free_params = (int)sol.GetFree().size(); 
-#else
-                // for IKFast 54
-                int this_sol_free_params = (int)vsolutions[i].GetFree().size();
-#endif
                 // printf("sol%d (free=%d): ", (int)i, this_sol_free_params );
                 std::vector<IKREAL_TYPE> vsolfree(this_sol_free_params);
 
-#if IK_VERSION > 54
                 // for IKFast 56,61
                 sol.GetSolution(&solvalues[0],vsolfree.size()>0?&vsolfree[0]:NULL);
-#else
-                // for IKFast 54
-                vsolutions[i].GetSolution(&solvalues[0],vsolfree.size()>0?&vsolfree[0]:NULL);
-#endif
                 for( std::size_t j = 0; j < solvalues.size(); ++j)
                     joint_configs.push_back(solvalues[j]);
                 //     printf("%.15f, ", solvalues[j]);
