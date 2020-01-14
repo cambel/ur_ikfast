@@ -1,0 +1,6 @@
+<robot file="ur3e.dae">
+        <Manipulator name="ur3e">
+          <base>base_link</base>
+          <effector>tool0</effector>
+        </Manipulator>
+</robot>
