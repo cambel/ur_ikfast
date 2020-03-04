@@ -28,7 +28,7 @@ class URKinematics():
         """
         if isinstance(joint_angles, np.ndarray):
             joint_angles = joint_angles.tolist()
-        
+
         ee_pose = self.kinematics.forward(joint_angles)
         ee_pose = np.asarray(ee_pose).reshape(3, 4)
 
@@ -61,8 +61,7 @@ class URKinematics():
         if all_solutions:
             return joint_configs
 
-        best_q = best_ik_sol(joint_configs, q_guess)
-        return q_guess if best_q is None else best_q
+        return best_ik_sol(joint_configs, q_guess)
 
 
 def best_ik_sol(sols, q_guess, weights=np.ones(6)):
