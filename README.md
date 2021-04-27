@@ -6,7 +6,13 @@ Inspired by https://github.com/andyzeng/ikfastpy
 
 Easy to install and use:
 1. clone
-2. install using pip </br>
+2. install dependencies
+
+`sudo apt-get install libblas-dev liblapack-dev`
+
+`pip install --user numpy Cython`
+
+3. install using pip </br>
 
 `$ git clone https://github.com/cambel/ur_ikfast.git`</br>
 `$ cd ur_ikfast`</br>
