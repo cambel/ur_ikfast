@@ -17,7 +17,7 @@ cdef extern from "<vector>" namespace "std":
         iterator begin()
         iterator end()
 
-cdef extern from "../Kinematics.hpp" namespace "robots":
+cdef extern from "../include/Kinematics.hpp" namespace "robots":
     cdef cppclass Kinematics:
         Kinematics()
         int num_of_joints, num_free_parameters
