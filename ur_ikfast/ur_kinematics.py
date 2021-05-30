@@ -49,6 +49,12 @@ class URKinematics():
             import ur3e_ikfast as ur_ikfast
         elif robot_name == 'ur5':
             import ur5_ikfast as ur_ikfast
+        elif robot_name == 'ur5e':
+            import ur5e_ikfast as ur_ikfast
+        elif robot_name == 'ur10':
+            import ur10_ikfast as ur_ikfast
+        elif robot_name == 'ur10e':
+            import ur16e_ikfast as ur_ikfast
         else:
             raise Exception("Unsupported robot")
 
