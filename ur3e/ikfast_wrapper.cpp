@@ -174,7 +174,7 @@ namespace robots {
             bool bSuccess = ComputeIk(eetrans, eerot, vfree.size() > 0 ? &vfree[0] : NULL, solutions);
 
             if( !bSuccess ) {
-                fprintf(stderr,"Error: (inverse kinematics) failed to get ik solution\n");
+                // fprintf(stderr,"Error: (inverse kinematics) failed to get ik solution\n");
                 return joint_configs;
             }
 
@@ -218,7 +218,7 @@ namespace robots {
             // for IKFast 56,61
             bool bSuccess = ComputeIk(eetrans, eerot, vfree.size() > 0 ? &vfree[0] : NULL, solutions);
             if( !bSuccess ) {
-                fprintf(stderr,"Error: (inverse kinematics) failed to get ik solution\n");
+                // fprintf(stderr,"Error: (inverse kinematics) failed to get ik solution\n");
                 return joint_configs;
             }
 
