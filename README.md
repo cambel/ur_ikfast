@@ -10,7 +10,7 @@ Easy to install and use:
 
 `sudo apt-get install libblas-dev liblapack-dev`
 
-`pip install --user numpy Cython`
+`pip install --user numpy Cython==0.29.21`
 
 3. install using pip </br>
 
