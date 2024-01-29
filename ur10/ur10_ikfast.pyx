@@ -1,7 +1,7 @@
 #This is a Cython file and extracts the relevant classes from the C++ header file.
 
 # distutils: language = c++
-# distutils: sources = ur10_ikfast_wrapper.cpp
+# distutils: sources = ur10/ikfast_wrapper.cpp
 
 cdef extern from "<vector>" namespace "std":
     cdef cppclass vector[T]:
