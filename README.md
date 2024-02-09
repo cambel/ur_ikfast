@@ -1,26 +1,28 @@
-# ur_ikfast
+# IKFast for Universal Robots
 
-IKFast libraries for UR3e, UR3 and UR5.
+IKFast libraries for UR3, UR5, and UR10 both the CB and e-series.
 
 Inspired by https://github.com/andyzeng/ikfastpy
 
+## Installation
 Easy to install and use:
-1. clone
-2. install dependencies
-
-`sudo apt-get install libblas-dev liblapack-dev`
-
-`pip install --user numpy Cython`
+1. install dependencies
+```shell
+sudo apt-get install libblas-dev liblapack-dev
+pip install --user numpy Cython
+```
 
 3. install using pip </br>
 
-`$ git clone https://github.com/cambel/ur_ikfast.git`</br>
-`$ cd ur_ikfast`</br>
-`$ pip install -e .`</br>
+```shell
+git clone https://github.com/cambel/ur_ikfast.git
+cd ur_ikfast
+pip install -e .
+```
 
-It takes a few minutes to compile the ikfast libraries.
+It takes a few minutes to compile the IKfast libraries.
 
-#### Example
+## Example
 ```python
 from ur_ikfast import ur_kinematics
 
