@@ -66,7 +66,7 @@ class URKinematics():
             Compute robot's forward kinematics for the specified robot
             joint_angles: list
             rotation_type: 'quaternion' or 'matrix'
-            :return: if 'quaternion' then return a list of [x, y, z, w. qx, qy, qz]
+            :return: if 'quaternion' then return a list of [x, y, z, qx, qy, qz, w]
                      if 'matrix' then a list of 12 values the 3x3 rotation matrix and 
                      the 3 translational values
         """
@@ -83,7 +83,7 @@ class URKinematics():
 
     def inverse(self, ee_pose, all_solutions=False, q_guess=np.zeros(6)):
         """ Compute robot's inverse kinematics for the specified robot
-            ee_pose: list of 7 if quaternion [x, y, z, w, qx, qy, qz]
+            ee_pose: list of 7 if quaternion [x, y, z, qx, qy, qz, w]
                      list of 12 if rotation matrix + translational values
             all_solutions: whether to return all the solutions found or just the best one
             q_guess:  if just one solution is request, this set of joint values will be use
