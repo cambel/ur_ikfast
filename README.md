@@ -4,6 +4,10 @@ IKFast libraries for UR3, UR5, and UR10 both the CB and e-series.
 
 Inspired by https://github.com/andyzeng/ikfastpy
 
+## Forward/Inverse Kinematics
+This library computes the forward and inverse for Universal Robots from the `base_link` frame to the `tool0` frame. 
+This only applies to the ideal robot model defined by their URDF. The real robots have small differences in each joint that are not considered here, so expect to see position/orientation errors from submillimeter errors to a few centimeters.
+
 ## Installation
 Easy to install and use:
 1. install dependencies
